@@ -19,17 +19,3 @@ const enhancer = compose(
 );
 
 export const store = createStore(namedStores, enhancer);
-
-export function generateActionDispatchers(...actions) {
-    return actions.reduce((acc, action) => {
-        const actionDispatcher = (...args) => {
-            store.dispatch({
-                type: action,
-                payload: args
-            });
-        };
-        actionDispatcher.defer = (...args) => setTimeout(() => actionDispatcher(...args));
-        return Object.assign(acc, {[action]: actionDispatcher });
-    },{});
-}
-

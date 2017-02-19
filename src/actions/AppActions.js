@@ -1,6 +1,6 @@
-import { generateActionDispatchers } from '../lib/redux';
+import { generateActionCreators } from '../lib/storesEnhancer';
 
-export default generateActionDispatchers(
+export default generateActionCreators(
     'setVisibilityFilter',
     'addTodo',
     'toggleTodo'
