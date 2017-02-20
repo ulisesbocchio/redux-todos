@@ -6,7 +6,7 @@ class TodosStore {
     }
 
     initialState() {
-        return {items: []};
+        return {items: [], filter: 'SHOW_ALL'};
     }
 
     addTodo(text, state) {
@@ -15,6 +15,10 @@ class TodosStore {
             text,
             completed: false
         }];
+    }
+
+    setVisibilityFilter(filter, state) {
+        state.filter = filter;
     }
 
     toggleTodo(id, state) {

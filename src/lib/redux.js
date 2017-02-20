@@ -1,18 +1,16 @@
 import TodosStore from '../stores/TodosStore';
-import VisibilityFilterStore from '../stores/VisibilityFilterStore';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { storesEnhancer } from './storesEnhancer';
 import logger from './logger';
 import crashReporter from './crashReporter';
-import AppActions from '../actions/AppActions';
+import TodosActions from '../actions/TodosActions';
 
 const namedStores = [
-    TodosStore,
-    VisibilityFilterStore
+    TodosStore
 ];
 
 const actionCreators = [
-    AppActions
+    TodosActions
 ];
 
 const enhancer = compose(

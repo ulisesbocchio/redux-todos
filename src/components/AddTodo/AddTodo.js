@@ -1,5 +1,5 @@
 import React from 'react';
-import AppActions from '../../actions/AppActions';
+import TodosActions from '../../actions/TodosActions';
 
 const AddTodo = () => {
   let input;
@@ -11,7 +11,7 @@ const AddTodo = () => {
         if (!input.value.trim()) {
           return
         }
-        AppActions.addTodo(input.value);
+          TodosActions.addTodo(input.value);
         input.value = ''
       }}>
         <input ref={node => {

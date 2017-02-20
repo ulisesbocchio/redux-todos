@@ -1,20 +1,23 @@
-import { connect } from 'react-redux'
-import AppActions from '../../actions/AppActions'
-import FilterLink from './FilterLink'
+import StoreContainer from '../StoreContainer';
+import TodosActions from '../../actions/TodosActions';
+import TodosStore from '../../stores/TodosStore';
+import FilterLink from './FilterLink';
 
-const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.filter === state.visibilityFilter.filter
+const mapStoreStateToProps = (state, ownProps) => ({
+  active: ownProps.filter === state.filter
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
-      AppActions.setVisibilityFilter(ownProps.filter);
+      TodosActions.setVisibilityFilter(ownProps.filter);
   }
 });
 
-const FilterLinkContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
+const FilterLinkContainer = StoreContainer({
+    namedStore: TodosStore
+  },
+    mapStoreStateToProps,
+    mapDispatchToProps
 )(FilterLink);
 
 export default FilterLinkContainer
