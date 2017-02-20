@@ -1,8 +1,6 @@
 import { combineReducers, bindActionCreators } from 'redux';
 import shallowEqual from './shallowEqual';
 
-const actionCreators = [];
-
 export function createStoreReducer(store) {
     return (previousStoreState, action) => {
         if(previousStoreState === undefined) return store.initialState();
@@ -17,9 +15,7 @@ export function createStoreReducer(store) {
 }
 
 function objectMap(obj, mapFn) {
-    return Object.assign({}, ...Object.entries(obj).map(([key, val]) => {
-        return {[key]: mapFn(val)};
-    }));
+    return Object.assign({}, ...Object.entries(obj).map(([key, val]) => ({[key]: mapFn(val)})));
 }
 
 function combineStoreReducers(stores) {
@@ -27,7 +23,7 @@ function combineStoreReducers(stores) {
     return combineReducers(storeReducers);
 }
 
-function bindOwnActionCreators(boundActionCreators) {
+function bindActualActionCreators(actionCreators, boundActionCreators) {
     actionCreators.forEach((actionCreator, i) => {
         const boundActionCreator = boundActionCreators[i];
         Object.keys(actionCreator).forEach(key => {
@@ -38,30 +34,30 @@ function bindOwnActionCreators(boundActionCreators) {
 }
 
 export function namedStore(name) {
-    return (store) => {
-        return {[name]: new store()}
-    };
+    return (store) => ({
+        name,
+        store: new store(),
+        selector: store => store[name]
+    });
 }
 
 export function generateActionCreators(...actions) {
-    const actionCreator = actions.reduce((acc, action) => {
+    return actions.reduce((acc, action) => {
         const actionCreatorMethod = (...args) => ({
                 type: action,
                 payload: args
             });
         return Object.assign(acc, {[action]: actionCreatorMethod });
     },{});
-    actionCreators.push(actionCreator);
-    return actionCreator;
 }
 
 export function storesEnhancer() {
-    return (createStore) => (namedStores, preloadedState, enhancer) => {
-        const storeMap = Object.assign({}, ...namedStores);
+    return (createStore) => ({namedStores, actionCreators}, preloadedState, enhancer) => {
+        const storeMap = Object.assign({}, ...namedStores.map(store => ({[store['name']]: store['store']})));
         const storeReducer = combineStoreReducers(storeMap);
         const store = createStore(storeReducer, preloadedState, enhancer);
         const boundActionCreators = actionCreators.map(ac => bindActionCreators(ac, store.dispatch));
-        bindOwnActionCreators(boundActionCreators);
+        bindActualActionCreators(actionCreators, boundActionCreators);
         return store;
     }
 }
