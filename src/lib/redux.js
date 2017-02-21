@@ -21,7 +21,18 @@ const enhancer = compose(
     )
 );
 
+const preloadedState = {
+    todos: {
+        items: [
+            {id: -3, text: 'buy beer', completed: true},
+            {id: -2, text: 'watch TV', completed: false},
+            {id: -1, text: 'go to sleep', completed: false}
+        ],
+        filter: 'SHOW_ALL'
+    },
+};
+
 export const store = createStore({
     namedStores,
     actionCreators
-}, enhancer);
+}, preloadedState, enhancer);
