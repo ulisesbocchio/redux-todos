@@ -1,9 +1,10 @@
-import { combineReducers, bindActionCreators } from 'redux';
+import {combineReducers, bindActionCreators} from 'redux';
 import shallowEqual from './shallowEqual';
 
 export function createStoreReducer(store) {
     return (previousStoreState, action) => {
-        if(previousStoreState === undefined) return store.initialState();
+        //eslint-disable-next-line no-undefined
+        if (previousStoreState === undefined) return store.initialState();
         let newState = previousStoreState;
         const actionReducer = store[action.type];
         if (actionReducer) {
@@ -37,27 +38,28 @@ export function namedStore(name) {
     return (store) => ({
         name,
         store: new store(),
-        selector: (store, ownProps) => store[name]
+        //eslint-disable-next-line no-unused-vars
+        selector: (s, p) => s[name]
     });
 }
 
 export function generateActionCreators(...actions) {
     return actions.reduce((acc, action) => {
         const actionCreatorMethod = (...args) => ({
-                type: action,
-                payload: args
-            });
-        return Object.assign(acc, {[action]: actionCreatorMethod });
-    },{});
+            type: action,
+            payload: args
+        });
+        return Object.assign(acc, {[action]: actionCreatorMethod});
+    }, {});
 }
 
-export function storesEnhancer() {
+export function namedStoresEnhancer() {
     return (createStore) => ({namedStores, actionCreators}, preloadedState, enhancer) => {
-        const storeMap = Object.assign({}, ...namedStores.map(store => ({[store['name']]: store['store']})));
+        const storeMap = Object.assign({}, ...namedStores.map(namedStore => ({[namedStore.name]: namedStore.store})));
         const storeReducer = combineStoreReducers(storeMap);
         const store = createStore(storeReducer, preloadedState, enhancer);
         const boundActionCreators = actionCreators.map(ac => bindActionCreators(ac, store.dispatch));
         bindActualActionCreators(actionCreators, boundActionCreators);
         return store;
-    }
+    };
 }

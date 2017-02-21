@@ -1,4 +1,4 @@
-import { namedStore } from '../lib/storesEnhancer';
+import { namedStore } from '../lib/namedStoresEnhancer';
 
 class TodosStore {
     constructor() {
