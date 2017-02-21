@@ -37,7 +37,7 @@ export function namedStore(name) {
     return (store) => ({
         name,
         store: new store(),
-        selector: store => store[name]
+        selector: (store, ownProps) => store[name]
     });
 }
 
