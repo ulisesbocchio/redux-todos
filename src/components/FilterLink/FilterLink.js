@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types'
 
 const Link = ({ active, children, onClick }) => {
   if (active) {
@@ -6,7 +7,7 @@ const Link = ({ active, children, onClick }) => {
   }
 
   return (
-    <a href="#"
+    <a href=""
        onClick={e => {
          e.preventDefault();
          onClick()
