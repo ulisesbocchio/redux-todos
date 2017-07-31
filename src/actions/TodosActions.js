@@ -1,4 +1,4 @@
-import { generateActionCreators } from '../lib/namedStoresEnhancer';
+import { generateActionCreators } from '../lib/namedReducers';
 
 export default generateActionCreators(
     'setVisibilityFilter',

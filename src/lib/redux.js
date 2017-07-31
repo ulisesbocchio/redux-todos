@@ -1,11 +1,11 @@
 import TodosStore from '../stores/TodosStore';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { namedStoresEnhancer } from './namedStoresEnhancer';
+import { namedReducersEnhancer } from './namedReducers';
 import logger from './logger';
 import crashReporter from './crashReporter';
 import TodosActions from '../actions/TodosActions';
 
-const namedStores = [
+const namedReducers = [
     TodosStore
 ];
 
@@ -14,7 +14,7 @@ const actionCreators = [
 ];
 
 const enhancer = compose(
-    namedStoresEnhancer(),
+    namedReducersEnhancer(),
     applyMiddleware(
         logger,
         crashReporter
@@ -33,6 +33,6 @@ const preloadedState = {
 };
 
 export const store = createStore({
-    namedStores,
+    namedReducers,
     actionCreators
 }, preloadedState, enhancer);

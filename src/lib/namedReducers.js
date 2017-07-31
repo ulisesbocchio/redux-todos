@@ -34,7 +34,7 @@ function bindActualActionCreators(actionCreators, boundActionCreators) {
     });
 }
 
-export function namedStore(name) {
+export function namedReducer(name) {
     return (store) => ({
         name,
         store: new store(),
@@ -53,9 +53,9 @@ export function generateActionCreators(...actions) {
     }, {});
 }
 
-export function namedStoresEnhancer() {
-    return (createStore) => ({namedStores, actionCreators}, preloadedState, enhancer) => {
-        const storeMap = Object.assign({}, ...namedStores.map(namedStore => ({[namedStore.name]: namedStore.store})));
+export function namedReducersEnhancer() {
+    return (createStore) => ({namedReducers, actionCreators}, preloadedState, enhancer) => {
+        const storeMap = Object.assign({}, ...namedReducers.map(namedReducer => ({[namedReducer.name]: namedReducer.store})));
         const storeReducer = combineStoreReducers(storeMap);
         const store = createStore(storeReducer, preloadedState, enhancer);
         const boundActionCreators = actionCreators.map(ac => bindActionCreators(ac, store.dispatch));

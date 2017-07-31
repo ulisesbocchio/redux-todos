@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const FilterLinkContainer = StoreContainer({
-    namedStore: TodosStore
+    namedReducer: TodosStore
   },
     mapStoreStateToProps,
     mapDispatchToProps
