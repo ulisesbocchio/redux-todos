@@ -1,22 +1,42 @@
 import { combineReducers, bindActionCreators } from 'redux';
-import shallowEqual from './shallowEqual';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-function createStoreReducer(actionReducerInstance) {
-    return (previousStoreState, action) => {
-        //eslint-disable-next-line no-undefined
-        if (previousStoreState === undefined) {
-            return actionReducerInstance.initialState();
+function capitalize(s) {
+    return s[0].toUpperCase() + s.slice(1);
+}
+
+function createSubtreeReducer({ reducer, methods }) {
+    const methodCache = {};
+    const findMethod = action => {
+        if (!(action.type in methodCache)) {
+            methodCache[action.type] = action.variants && methods.find(key => action.variants.includes(key));
         }
-        let newState = previousStoreState;
-        const actionReducer = actionReducerInstance[action.type];
-        if (actionReducer) {
-            newState = Object.assign({}, previousStoreState);
-            actionReducer.bind(actionReducerInstance)(...action.payload, newState);
-        }
-        return (!actionReducer || shallowEqual(newState, previousStoreState)) ? previousStoreState : newState;
+        return methodCache[action.type];
     };
+    return (subtreeState, action) => {
+        //eslint-disable-next-line no-undefined
+        if (subtreeState === undefined) {
+            return reducer.initialState();
+        }
+        const reducerMethod = findMethod(action);
+        if (reducerMethod) {
+            return reducer[reducerMethod].bind(reducer)(...action.payload, subtreeState);
+        }
+        return subtreeState;
+    };
+}
+
+function actionVariants(type) {
+    const normalized = normalizeActionName(type);
+    return [normalized, `on${capitalize(normalized)}`];
+}
+
+function normalizeActionName(type) {
+    if (type.match(/_/)) {
+        return type.toLowerCase().split(/_/g).map((s, i) => i > 0 ? capitalize(s) : s).join('');
+    }
+    return type;
 }
 
 function objectMap(obj, mapFn) {
@@ -24,8 +44,8 @@ function objectMap(obj, mapFn) {
 }
 
 function combineAllReducers(actionReducers) {
-    const reducersMap = Object.assign({}, ...actionReducers.map(actionReducer => ({[actionReducer.name]: actionReducer.reducer})));
-    const storeReducers = objectMap(reducersMap, store => createStoreReducer(store));
+    const reducersMap = Object.assign({}, ...actionReducers.map(actionReducer => ({[actionReducer.name]: actionReducer})));
+    const storeReducers = objectMap(reducersMap, actionReducer => createSubtreeReducer(actionReducer));
     return combineReducers(storeReducers);
 }
 
@@ -40,19 +60,30 @@ function bindAllActionCreators(actionCreators, dispatch) {
     });
 }
 
+function getClassMethods(instance) {
+    return Object.getOwnPropertyNames(Object.getPrototypeOf(instance))
+        .filter(m => m !== 'constructor');
+}
+
 export function actionReducer(name) {
-    return (reducerClass) => ({
-        name,
-        reducer: new reducerClass(),
-        //eslint-disable-next-line no-unused-vars
-        selector: (state, props) => state[name]
-    });
+    return (reducerClass) => {
+        const instance = new reducerClass();
+        return {
+            name,
+            clazz: reducerClass,
+            reducer: instance,
+            methods: getClassMethods(instance),
+            //eslint-disable-next-line no-unused-vars
+            selector: (state, props) => state[name]
+        }
+    };
 }
 
 export function generateActionCreators(...actions) {
-    return Object.assign({}, ...actions.map(action => ({[action]: (...args) => ({
+    return Object.assign({}, ...actions.map(action => ({[normalizeActionName(action)]: (...args) => ({
         type: action,
-        payload: args
+        payload: args,
+        variants: actionVariants(action)
     })})));
 }
 

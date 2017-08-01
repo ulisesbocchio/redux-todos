@@ -1,4 +1,5 @@
 import { actionReducer } from '../lib/actionReducers';
+import { Map, Seq, List } from 'immutable';
 
 class TodosReducer {
     constructor() {
@@ -6,24 +7,35 @@ class TodosReducer {
     }
 
     initialState() {
-        return {items: [], filter: 'SHOW_ALL'};
+        return {
+            items: [],
+            filter: 'SHOW_ALL'
+        };
     }
 
     addTodo(text, state) {
-        state.items = [...state.items, {
+        const items = List(state.items).push({
             id: this.lastId++,
             text,
             completed: false
-        }];
+        });
+        return Map(state)
+            .merge({ items })
+            .toJS();
     }
 
-    setVisibilityFilter(filter, state) {
-        state.filter = filter;
+    onSetVisibilityFilter(filter, state) {
+        return Map(state)
+            .merge({ filter })
+            .toObject();
     }
 
     toggleTodo(id, state) {
-        state.items = state.items
-            .map(item => item.id === id ? Object.assign({}, item, {completed: !item.completed}) : item);
+        const items = Seq(state.items)
+            .map(item => item.id === id ? Map(item).set('completed', !item.completed) : item);
+        return Map(state)
+            .merge({ items })
+            .toJS();
     }
 }
 
