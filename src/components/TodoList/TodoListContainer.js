@@ -23,7 +23,7 @@ const mapStoreStateToProps = (state) => ({
 const inject = {};
 
 const VisibleTodoList = StoreContainer({
-        namedReducer: TodosStore,
+        actionReducer: TodosStore,
         actions: TodosActions,
         inject
     },

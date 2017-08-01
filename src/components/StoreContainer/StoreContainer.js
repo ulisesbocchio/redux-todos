@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-const StoreContainer = ({namedReducer, actions, inject}, mapStoreStateToProps, mapStoreDispatchToProps) => (component) => {
+const StoreContainer = ({actionReducer, actions, inject}, mapStoreStateToProps, mapStoreDispatchToProps) => (component) => {
     const mapStateToProps = (state, ownProps) => {
         return Object.assign({},
             actions,
@@ -14,7 +14,7 @@ const StoreContainer = ({namedReducer, actions, inject}, mapStoreStateToProps, m
         return mapStoreDispatchToProps ? mapStoreDispatchToProps(dispatch, ownProps) : {};
     };
 
-    const mapStateToPropsCreator = () => createSelector([namedReducer.selector, (s, p) => p], mapStateToProps);
+    const mapStateToPropsCreator = () => createSelector([actionReducer.selector, (s, p) => p], mapStateToProps);
     const mapDispatchToPropsCreator = () => createSelector([(d, p) => d, (d, p) => p], mapDispatchToProps);
 
     return connect(

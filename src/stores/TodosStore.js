@@ -1,4 +1,4 @@
-import { namedReducer } from '../lib/namedReducers';
+import { actionReducer } from '../lib/actionReducers';
 
 class TodosStore {
     constructor() {
@@ -27,4 +27,4 @@ class TodosStore {
     }
 }
 
-export default namedReducer('todos')(TodosStore);
+export default actionReducer('todos')(TodosStore);

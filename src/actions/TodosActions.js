@@ -1,4 +1,4 @@
-import { generateActionCreators } from '../lib/namedReducers';
+import { generateActionCreators } from '../lib/actionReducers';
 
 export default generateActionCreators(
     'setVisibilityFilter',
