@@ -1,4 +1,4 @@
-import connectActionReducer from '../connectActionReducer';
+import { connectActionReducer } from '../../lib/actionReducers';
 import TodosActions from '../../actions/TodosActions';
 import TodosReducer from '../../reducers/TodosReducer';
 import FilterLink from './FilterLink';

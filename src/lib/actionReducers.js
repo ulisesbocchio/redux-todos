@@ -1,5 +1,7 @@
-import {combineReducers, bindActionCreators} from 'redux';
+import { combineReducers, bindActionCreators } from 'redux';
 import shallowEqual from './shallowEqual';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 function createStoreReducer(actionReducerInstance) {
     return (previousStoreState, action) => {
@@ -60,5 +62,29 @@ export function actionReducersEnhancer() {
         const store = createStore(storeReducer, preloadedState, enhancer);
         bindAllActionCreators(actionCreators, store.dispatch);
         return store;
+    };
+}
+
+export function connectActionReducer({actionReducer, actions, inject}, mapStoreStateToProps, mapStoreDispatchToProps) {
+    return (component) => {
+        const mapStateToProps = (state, ownProps) => {
+            return Object.assign({},
+                actions,
+                inject,
+                mapStoreStateToProps ? mapStoreStateToProps(state, ownProps) : state
+            );
+        };
+
+        const mapDispatchToProps = (dispatch, ownProps) => {
+            return mapStoreDispatchToProps ? mapStoreDispatchToProps(dispatch, ownProps) : {};
+        };
+
+        const mapStateToPropsCreator = () => createSelector([actionReducer.selector, (s, p) => p], mapStateToProps);
+        const mapDispatchToPropsCreator = () => createSelector([(d, p) => d, (d, p) => p], mapDispatchToProps);
+
+        return connect(
+            mapStateToPropsCreator,
+            mapDispatchToPropsCreator
+        )(component);
     };
 }
