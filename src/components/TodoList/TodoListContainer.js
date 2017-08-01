@@ -1,7 +1,7 @@
-import StoreContainer from '../StoreContainer';
+import connectActionReducer from '../connectActionReducer';
 import TodosActions from '../../actions/TodosActions';
 import TodoList from './TodoList';
-import TodosStore from '../../stores/TodosStore';
+import TodosReducer from '../../reducers/TodosReducer';
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
@@ -22,8 +22,8 @@ const mapStoreStateToProps = (state) => ({
 
 const inject = {};
 
-const VisibleTodoList = StoreContainer({
-        actionReducer: TodosStore,
+const VisibleTodoList = connectActionReducer({
+        actionReducer: TodosReducer,
         actions: TodosActions,
         inject
     },

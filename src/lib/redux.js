@@ -1,4 +1,4 @@
-import TodosStore from '../stores/TodosStore';
+import TodosReducer from '../reducers/TodosReducer';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { actionReducersEnhancer } from './actionReducers';
 import logger from './logger';
@@ -6,7 +6,7 @@ import crashReporter from './crashReporter';
 import TodosActions from '../actions/TodosActions';
 
 const actionReducers = [
-    TodosStore
+    TodosReducer
 ];
 
 const actionCreators = [

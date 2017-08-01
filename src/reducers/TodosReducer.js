@@ -1,6 +1,6 @@
 import { actionReducer } from '../lib/actionReducers';
 
-class TodosStore {
+class TodosReducer {
     constructor() {
         this.lastId = 0;
     }
@@ -27,4 +27,4 @@ class TodosStore {
     }
 }
 
-export default actionReducer('todos')(TodosStore);
+export default actionReducer('todos')(TodosReducer);

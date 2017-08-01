@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-const StoreContainer = ({actionReducer, actions, inject}, mapStoreStateToProps, mapStoreDispatchToProps) => (component) => {
+export default ({actionReducer, actions, inject}, mapStoreStateToProps, mapStoreDispatchToProps) => (component) => {
     const mapStateToProps = (state, ownProps) => {
         return Object.assign({},
             actions,
@@ -22,5 +22,3 @@ const StoreContainer = ({actionReducer, actions, inject}, mapStoreStateToProps, 
         mapDispatchToPropsCreator
     )(component);
 };
-
-export default StoreContainer;

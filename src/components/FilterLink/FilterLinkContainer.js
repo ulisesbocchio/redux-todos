@@ -1,6 +1,6 @@
-import StoreContainer from '../StoreContainer';
+import connectActionReducer from '../connectActionReducer';
 import TodosActions from '../../actions/TodosActions';
-import TodosStore from '../../stores/TodosStore';
+import TodosReducer from '../../reducers/TodosReducer';
 import FilterLink from './FilterLink';
 
 const mapStoreStateToProps = (state, ownProps) => ({
@@ -13,8 +13,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 });
 
-const FilterLinkContainer = StoreContainer({
-    actionReducer: TodosStore
+const FilterLinkContainer = connectActionReducer({
+    actionReducer: TodosReducer
   },
     mapStoreStateToProps,
     mapDispatchToProps
