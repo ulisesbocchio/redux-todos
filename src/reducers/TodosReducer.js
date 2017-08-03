@@ -1,4 +1,4 @@
-import { actionReducer } from '../lib/actionReducers';
+import { actionReducer } from 'react-redux-boilerout';
 import { Map, Seq, List } from 'immutable';
 
 class TodosReducer {

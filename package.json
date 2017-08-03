@@ -5,9 +5,16 @@
   "devDependencies": {
     "enzyme": "2.9.1",
     "react-addons-test-utils": "15.6.0",
-    "react-scripts": "1.0.10"
+    "react-scripts": "1.0.10",
+    "eslint": "^4.0.0",
+    "eslint-config-react-app": "^1.0.4",
+    "eslint-plugin-flowtype": "^2.29.2",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.1.0"
   },
   "dependencies": {
+    "react-redux-boilerout": "0.0.1",
     "immutable": "3.8.1",
     "prop-types": "15.5.10",
     "react": "15.6.1",
@@ -17,6 +24,7 @@
     "reselect": "2.5.4"
   },
   "scripts": {
+    "lint": "eslint --fix src",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",

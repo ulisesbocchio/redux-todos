@@ -1,4 +1,4 @@
-import { connectActionReducer } from '../../lib/actionReducers';
+import { connectActionReducer } from 'react-redux-boilerout';
 import TodosActions from '../../actions/TodosActions';
 import TodosReducer from '../../reducers/TodosReducer';
 import FilterLink from './FilterLink';

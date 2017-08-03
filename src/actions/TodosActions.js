@@ -1,6 +1,6 @@
-import { generateActionCreators } from '../lib/actionReducers';
+import { generateActionDispatchers } from 'react-redux-boilerout';
 
-export default generateActionCreators(
+export default generateActionDispatchers(
     'setVisibilityFilter',
     'addTodo',
     'TOGGLE_TODO'
