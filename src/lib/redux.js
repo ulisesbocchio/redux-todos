@@ -1,11 +1,11 @@
 import TodosReducer from '../reducers/TodosReducer';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { actionReducersEnhancer } from 'react-redux-boilerout';
+import { boileroutEnhancer } from 'react-redux-boilerout';
 import logger from './logger';
 import crashReporter from './crashReporter';
 import TodosActions from '../actions/TodosActions';
 
-const actionReducers = [
+const sliceReducers = [
     TodosReducer
 ];
 
@@ -14,7 +14,7 @@ const actionDispatchers = [
 ];
 
 const enhancer = compose(
-    actionReducersEnhancer(),
+    boileroutEnhancer(),
     applyMiddleware(
         logger,
         crashReporter
@@ -33,6 +33,6 @@ const preloadedState = {
 };
 
 export const store = createStore({
-    actionReducers,
+    sliceReducers,
     actionDispatchers
 }, preloadedState, enhancer);

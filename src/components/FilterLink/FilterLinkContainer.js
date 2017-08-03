@@ -1,6 +1,5 @@
-import { connectActionReducer } from 'react-redux-boilerout';
+import { connectSlice } from 'react-redux-boilerout';
 import TodosActions from '../../actions/TodosActions';
-import TodosReducer from '../../reducers/TodosReducer';
 import FilterLink from './FilterLink';
 
 const mapStoreStateToProps = (state, ownProps) => ({
@@ -13,8 +12,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   }
 });
 
-const FilterLinkContainer = connectActionReducer({
-    actionReducer: TodosReducer
+const FilterLinkContainer = connectSlice({
+    slice: 'todos'
   },
     mapStoreStateToProps,
     mapDispatchToProps

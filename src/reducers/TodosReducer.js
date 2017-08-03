@@ -1,4 +1,4 @@
-import { actionReducer } from 'react-redux-boilerout';
+import { sliceReducer } from 'react-redux-boilerout';
 import { Map, Seq, List } from 'immutable';
 
 class TodosReducer {
@@ -39,4 +39,4 @@ class TodosReducer {
     }
 }
 
-export default actionReducer('todos')(TodosReducer);
+export default sliceReducer('todos')(TodosReducer);
