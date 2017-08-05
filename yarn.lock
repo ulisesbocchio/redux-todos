@@ -5250,9 +5250,9 @@ react-error-overlay@^1.0.9:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
-react-redux-boilerout@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-redux-boilerout/-/react-redux-boilerout-0.0.1.tgz#7ed2d5fae12dfab7180c03cb5121b9849fd5985a"
+react-redux-boilerout@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-redux-boilerout/-/react-redux-boilerout-0.0.2.tgz#dec26eec17445e96894106c83ba7808581857801"
   dependencies:
     reselect "^3.0.1"
 
