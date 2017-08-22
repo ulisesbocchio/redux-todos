@@ -1,6 +1,7 @@
 import { connectSlice } from 'react-redux-boilerout';
 import TodosActions from '../../actions/TodosActions';
 import TodoList from './TodoList';
+import TodosReducer from '../../reducers/TodosReducer';
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
@@ -22,7 +23,7 @@ const mapStoreStateToProps = (state) => ({
 const inject = {};
 
 const VisibleTodoList = connectSlice({
-        slice: 'todos',
+        slice: TodosReducer,
         actions: TodosActions,
         inject
     },

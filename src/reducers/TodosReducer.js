@@ -1,14 +1,17 @@
-import { sliceReducer } from 'react-redux-boilerout';
+import { sliceReducer, registerSliceReducer } from 'react-redux-boilerout';
 import { Map, Seq, List } from 'immutable';
+import { reducerRegistry, store } from '../lib/redux';
 
 class TodosReducer {
     constructor() {
-        this.lastId = 0;
+        this.lastId = 4;
     }
 
-    initialState() {
+    static initialState() {
         return {
-            items: [],
+            items: [{id: 1, text: 'buy beer', completed: true},
+                {id: 2, text: 'watch TV', completed: false},
+                {id: 3, text: 'go to sleep', completed: false}],
             filter: 'SHOW_ALL'
         };
     }
@@ -39,4 +42,4 @@ class TodosReducer {
     }
 }
 
-export default sliceReducer('todos')(TodosReducer);
+export default registerSliceReducer(store, reducerRegistry)(sliceReducer('todos')(TodosReducer));
