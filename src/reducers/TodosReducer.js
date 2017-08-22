@@ -1,7 +1,8 @@
 import { sliceReducer } from 'react-redux-boilerout';
 import { Map, Seq, List } from 'immutable';
 
-class TodosReducer {
+@sliceReducer('todos')
+export default class TodosReducer {
     constructor() {
         this.lastId = 0;
     }
@@ -38,5 +39,3 @@ class TodosReducer {
             .toJS();
     }
 }
-
-export default sliceReducer('todos')(TodosReducer);

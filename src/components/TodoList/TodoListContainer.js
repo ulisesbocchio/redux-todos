@@ -15,7 +15,7 @@ const getVisibleTodos = (todos, filter) => {
     }
 };
 
-const mapStoreStateToProps = (state) => ({
+const mapSliceStateToProps = (state) => ({
     todos: getVisibleTodos(state.items, state.filter)
 });
 
@@ -26,7 +26,7 @@ const VisibleTodoList = connectSlice({
         actions: TodosActions,
         inject
     },
-    mapStoreStateToProps
+    mapSliceStateToProps
 )(TodoList);
 
 export default VisibleTodoList
