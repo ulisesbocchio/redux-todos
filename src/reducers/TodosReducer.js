@@ -14,7 +14,7 @@ export default class TodosReducer {
         };
     }
 
-    addTodo(text, state) {
+    addTodo(state, text) {
         const items = List(state.items).push({
             id: this.lastId++,
             text,
@@ -25,13 +25,13 @@ export default class TodosReducer {
             .toJS();
     }
 
-    onSetVisibilityFilter(filter, state) {
+    onSetVisibilityFilter(state, filter) {
         return Map(state)
             .merge({ filter })
             .toObject();
     }
 
-    toggleTodo(id, state) {
+    toggleTodo(state, id) {
         const items = Seq(state.items)
             .map(item => item.id === id ? Map(item).set('completed', !item.completed) : item);
         return Map(state)

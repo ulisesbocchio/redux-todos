@@ -6,7 +6,7 @@ import TodoList from './TodoList';
 @sliceContainer({ slice: 'todos', actions: TodosActions, component: TodoList })
 export default class VisibleTodoList {
 
-    getVisibleTodos = (todos, filter) => {
+    static getVisibleTodos = (todos, filter) => {
         switch (filter) {
             case 'SHOW_ALL':
                 return todos;
@@ -19,13 +19,13 @@ export default class VisibleTodoList {
         }
     };
 
-    mapSliceStateToProps(state) {
+    static mapSliceStateToProps(state) {
         return {
             todos: this.getVisibleTodos(state.items, state.filter)
         }
     }
 
-    inject() {
+    static inject() {
 
     }
 }
