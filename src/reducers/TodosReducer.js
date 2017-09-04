@@ -2,7 +2,9 @@ import { sliceReducer, registerSliceReducer } from 'react-redux-boilerout';
 import { Map, Seq, List } from 'immutable';
 import { reducerRegistry, store } from '../lib/redux';
 
-class TodosReducer {
+@registerSliceReducer(store, reducerRegistry)
+@sliceReducer('todos')
+export default class TodosReducer {
     constructor() {
         this.lastId = 4;
     }
@@ -16,7 +18,7 @@ class TodosReducer {
         };
     }
 
-    addTodo(text, state) {
+    addTodo(state, text) {
         const items = List(state.items).push({
             id: this.lastId++,
             text,
@@ -27,13 +29,13 @@ class TodosReducer {
             .toJS();
     }
 
-    onSetVisibilityFilter(filter, state) {
+    onSetVisibilityFilter(state, filter) {
         return Map(state)
             .merge({ filter })
             .toObject();
     }
 
-    toggleTodo(id, state) {
+    toggleTodo(state, id) {
         const items = Seq(state.items)
             .map(item => item.id === id ? Map(item).set('completed', !item.completed) : item);
         return Map(state)
@@ -41,5 +43,3 @@ class TodosReducer {
             .toJS();
     }
 }
-
-export default registerSliceReducer(store, reducerRegistry)(sliceReducer('todos')(TodosReducer));
