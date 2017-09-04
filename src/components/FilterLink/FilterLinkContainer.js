@@ -4,7 +4,7 @@ import FilterLink from './FilterLink';
 
 @sliceContainer({ slice: 'todos', actions: TodosActions, component: FilterLink })
 export default class FilterLinkContainer {
-    static mapStoreStateToProps = (state, ownProps) => ({
+    static mapSliceStateToProps = (state, ownProps) => ({
         active: ownProps.filter === state.filter
     });
 
