@@ -1,8 +1,8 @@
 import { sliceReducer, registerSliceReducer } from 'react-redux-boilerout';
 import { Map, Seq, List } from 'immutable';
-import { reducerRegistry, store } from '../lib/redux';
+import { reducerRegistry } from '../lib/redux';
 
-@registerSliceReducer(store, reducerRegistry)
+@registerSliceReducer({ registry: reducerRegistry })
 @sliceReducer('todos')
 export default class TodosReducer {
     constructor() {

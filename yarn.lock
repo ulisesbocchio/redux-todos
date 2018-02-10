@@ -5317,9 +5317,9 @@ react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
 
-react-redux-boilerout@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-redux-boilerout/-/react-redux-boilerout-0.0.4.tgz#20e942e8c061b1cd9fc51656d2b081be3e3036b3"
+react-redux-boilerout@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-redux-boilerout/-/react-redux-boilerout-0.0.5.tgz#f797ca253a067f0064c26fc4e24d142e0755784b"
   dependencies:
     reselect "3.0.1"
 
