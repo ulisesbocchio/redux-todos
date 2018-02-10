@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { combineSliceReducers } from 'react-redux-boilerout';
+import { combineSliceReducers, storeHolder } from 'react-redux-boilerout';
 import logger from './logger';
 import crashReporter from './crashReporter';
 import TodosReducer from '../reducers/TodosReducer';
@@ -8,7 +8,8 @@ const enhancer = compose(
     applyMiddleware(
         logger,
         crashReporter
-    )
+    ),
+    storeHolder
 );
 
 const preloadedState = {
