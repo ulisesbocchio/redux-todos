@@ -1,20 +1,17 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { DynamicSliceReducer, storeHolder } from 'react-redux-boilerout';
+import { DynamicSliceReducer } from 'react-redux-boilerout';
 import logger from './logger';
 import crashReporter from './crashReporter';
 
+const reducerRegistry = new DynamicSliceReducer();
 const enhancer = compose(
     applyMiddleware(
         logger,
         crashReporter
     ),
-    storeHolder
+    reducerRegistry.enhancer
 );
 
-const reducerRegistry = new DynamicSliceReducer();
-const store = createStore(reducerRegistry.reducer(), enhancer);
-
-export {
-    store,
-    reducerRegistry
-}
+export const store = createStore(reducerRegistry.reducer, enhancer);
+export const registerSliceReducer = reducerRegistry.registerSliceReducer;
+export const actionDispatcher = reducerRegistry.actionDispatcher;
