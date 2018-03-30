@@ -13,5 +13,6 @@ const enhancer = compose(
 );
 
 export const store = createStore(reducerRegistry.reducer, enhancer);
+
 export const registerSliceReducer = reducerRegistry.registerSliceReducer;
 export const actionDispatcher = reducerRegistry.actionDispatcher;
